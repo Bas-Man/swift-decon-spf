@@ -22,6 +22,25 @@ enum Qualifier: String {
 }
 enum MechanismKind {
     case Redirect, Include, A, MX, ip4, ip6, All;
+    
+    func get() -> String {
+        switch self {
+        case .Redirect:
+            return "redirect="
+        case .Include:
+            return "include:"
+        case .A:
+            return "a"
+        case .MX:
+            return "mx"
+        case .ip4:
+            return "ip4:"
+        case .ip6:
+            return "ip6:"
+        case .All:
+            return "all"
+        }
+    }
 }
 
 struct Mechanism {
