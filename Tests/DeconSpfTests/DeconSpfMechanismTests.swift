@@ -1,7 +1,7 @@
 import XCTest
 @testable import DeconSpf;
 
-final class SPFTests: XCTestCase {
+final class SPFMechanismTests: XCTestCase {
 
     func testMechanismRedirect() {
         let Mech = Mechanism(k: MechanismKind.Redirect, q: Qualifier.None, m: "test.com");
