@@ -1,15 +1,26 @@
 import XCTest
-@testable import DeconSpf
+@testable import DeconSpf;
 
-final class DeconSpfTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(DeconSpf().text, "Hello, World!")
+final class SPFTests: XCTestCase {
+
+    func testMechanismRedirect() {
+        let Mech = Mechanism(k: MechanismKind.Redirect, q: Qualifier.None, m: "test.com");
+        XCTAssertEqual(Mech.mechanismString(), "test.com");
+        XCTAssertEqual(Mech.whatKind(), MechanismKind.Redirect);
+        XCTAssertNotEqual(Mech.whatKind(), MechanismKind.A);
+        XCTAssertEqual(Mech.isNone(), true);
     }
-
+    func testMechanismInclude() {
+        let Mech = Mechanism(k: MechanismKind.Include, q: Qualifier.Pass, m: "_spf.test.com");
+        XCTAssertEqual(Mech.mechanismString(), "_spf.test.com");
+        XCTAssertEqual(Mech.whatKind(), MechanismKind.Include);
+        XCTAssertNotEqual(Mech.whatKind(), MechanismKind.Redirect);
+        XCTAssertNotEqual(Mech.whatKind(), MechanismKind.A);
+        XCTAssertEqual(Mech.isPass(), true);
+    }
     static var allTests = [
-        ("testExample", testExample),
+        ("testMechanismRedirect", testMechanismRedirect),
+        ("testMechanismInclude", testMechanismInclude),
     ]
 }
+
