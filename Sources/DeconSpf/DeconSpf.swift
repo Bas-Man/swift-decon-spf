@@ -1,9 +1,24 @@
 enum Qualifier: String {
-    case Pass = "+"
-    case Fail = "-"
-    case SoftFail = "~"
-    case Neutral = "?"
+    case Pass
+    case Fail
+    case SoftFail
+    case Neutral
     case None
+    
+    func get() -> String {
+        switch self {
+        case .Pass:
+            return "+"
+        case .Fail:
+            return "-"
+        case .SoftFail:
+            return "~"
+        case .Neutral:
+            return "?"
+        case .None:
+            return ""
+        }
+    }
 }
 enum MechanismKind {
     case Redirect, Include, A, MX, ip4, ip6, All;
