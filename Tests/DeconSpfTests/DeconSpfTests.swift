@@ -18,9 +18,14 @@ final class SPFTests: XCTestCase {
         XCTAssertNotEqual(Mech.whatKind(), MechanismKind.A);
         XCTAssertEqual(Mech.isPass(), true);
     }
+    func testAsMechanism() {
+        let Mech = Mechanism(k: MechanismKind.ip4, q: Qualifier.None, m: "192.168.1.0/24");
+        XCTAssertEqual(Mech.asMechanism(), "ip4:192.168.1.0/24");
+    }
     static var allTests = [
         ("testMechanismRedirect", testMechanismRedirect),
         ("testMechanismInclude", testMechanismInclude),
+        ("testAsMechanism", testAsMechanism),
     ]
 }
 
