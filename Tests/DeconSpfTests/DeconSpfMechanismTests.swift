@@ -40,7 +40,7 @@ final class SPFMechanismTests: XCTestCase {
         XCTAssertEqual(Mech.asMechanism(), "include:_spf1.example.com");
     }
     func testAsMechanismA() {
-        let Mech = Mechanism(k: MechanismKind.A, q: Qualifier.None, m: "");
+        let Mech = Mechanism(k: MechanismKind.A, q: Qualifier.None);
         XCTAssertEqual(Mech.asMechanism(), "a");
     }
     func testAsMechanismAColon() {
@@ -48,7 +48,7 @@ final class SPFMechanismTests: XCTestCase {
         XCTAssertEqual(Mech.asMechanism(), "~a:mailers.example.com");
     }
     func testAsMechanismMx() {
-        let Mech = Mechanism(k: MechanismKind.MX, q: Qualifier.None, m: "");
+        let Mech = Mechanism(k: MechanismKind.MX, q: Qualifier.None);
         XCTAssertEqual(Mech.asMechanism(), "mx");
     }
     func testAsMechanismMxColon() {
@@ -56,19 +56,19 @@ final class SPFMechanismTests: XCTestCase {
         XCTAssertEqual(Mech.asMechanism(), "?mx:example.com");
     }
     func testAsMechanismAllPass() {
-        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Pass, m: "");
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Pass);
         XCTAssertEqual(Mech.asMechanism(), "+all");
     }
     func testAsMechanismAllFail() {
-        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Fail, m: "");
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Fail);
         XCTAssertEqual(Mech.asMechanism(), "-all");
     }
     func testAsMechanismAllSoftFail() {
-        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.SoftFail, m: "");
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.SoftFail);
         XCTAssertEqual(Mech.asMechanism(), "~all");
     }
     func testAsMechanismAllNeutral() {
-        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Neutral, m: "");
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Neutral);
         XCTAssertEqual(Mech.asMechanism(), "?all");
     }
     static var allTests = [
