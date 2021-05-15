@@ -55,7 +55,22 @@ final class SPFMechanismTests: XCTestCase {
         let Mech = Mechanism(k: MechanismKind.MX, q: Qualifier.Neutral, m: ":example.com");
         XCTAssertEqual(Mech.asMechanism(), "?mx:example.com");
     }
-
+    func testAsMechanismAllPass() {
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Pass, m: "");
+        XCTAssertEqual(Mech.asMechanism(), "+all");
+    }
+    func testAsMechanismAllFail() {
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Fail, m: "");
+        XCTAssertEqual(Mech.asMechanism(), "-all");
+    }
+    func testAsMechanismAllSoftFail() {
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.SoftFail, m: "");
+        XCTAssertEqual(Mech.asMechanism(), "~all");
+    }
+    func testAsMechanismAllNeutral() {
+        let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Neutral, m: "");
+        XCTAssertEqual(Mech.asMechanism(), "?all");
+    }
     static var allTests = [
         ("testMechanismRedirect", testMechanismRedirect),
         ("testMechanismInclude", testMechanismInclude),
@@ -68,6 +83,10 @@ final class SPFMechanismTests: XCTestCase {
         ("testAsMechanismAColon", testAsMechanismAColon),
         ("testAsMechanismMx", testAsMechanismMx),
         ("testAsMechanismMxColon", testAsMechanismMxColon),
+        ("testAsMechanismAllPass", testAsMechanismAllPass),
+        ("testAsMechanismAllFail", testAsMechanismAllFail),
+        ("testAsMechanismAllSoftFail", testAsMechanismAllSoftFail),
+        ("testAsMechanismAllNeutral", testAsMechanismAllNeutral),
     ]
 }
 
