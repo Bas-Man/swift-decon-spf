@@ -56,6 +56,15 @@ struct Mechanism {
     func mechanismString() -> String {
         self.mechanism;
     }
+    func asMechanism() -> String {
+        var mechanismString = String();
+        // TODO: Qualifier
+        // Access the string for this mechanism's kind.
+        mechanismString += self.kind.get();
+        // Access the string for the mechanim
+        mechanismString += self.mechanism;
+        return mechanismString;
+    }
     func whatKind() -> MechanismKind {
         return self.kind;
     }
