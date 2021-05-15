@@ -19,11 +19,16 @@ final class SPFMechanismTests: XCTestCase {
         XCTAssertEqual(Mech.isPass(), true);
     }
     func testAsMechanismIp4() {
-        let Mech = Mechanism(k: MechanismKind.ip4, q: Qualifier.None, m: "192.168.1.0/24");
+        let Mech = Mechanism(k: MechanismKind.Ip4, q: Qualifier.None, m: "192.168.1.0/24");
         XCTAssertEqual(Mech.asMechanism(), "ip4:192.168.1.0/24");
     }
+    func testAsMechanismIp4Pass() {
+        let Mech = Mechanism(k: MechanismKind.Ip4, q: Qualifier.Pass, m: "192.168.1.0/24");
+        XCTAssertEqual(Mech.asMechanism(), "+ip4:192.168.1.0/24");
+    }
+
     func testAsMechanismIp6() {
-        let Mech = Mechanism(k: MechanismKind.ip6, q: Qualifier.None, m: "X:X:X:X/16");
+        let Mech = Mechanism(k: MechanismKind.Ip6, q: Qualifier.None, m: "X:X:X:X/16");
         XCTAssertEqual(Mech.asMechanism(), "ip6:X:X:X:X/16");
     }
     func testAsMechanismRedirect() {
@@ -42,11 +47,12 @@ final class SPFMechanismTests: XCTestCase {
         let Mech = Mechanism(k: MechanismKind.MX, q: Qualifier.None, m: "");
         XCTAssertEqual(Mech.asMechanism(), "mx");
     }
-
+    
     static var allTests = [
         ("testMechanismRedirect", testMechanismRedirect),
         ("testMechanismInclude", testMechanismInclude),
         ("testAsMechanismIp4", testAsMechanismIp4),
+        ("testAsMechanismIp4Pass", testAsMechanismIp4Pass),
         ("testAsMechanismIp6", testAsMechanismIp6),
         ("testAsMechanismRedirect", testAsMechanismRedirect),
         ("testAsMechanismInclude", testAsMechanismInclude),

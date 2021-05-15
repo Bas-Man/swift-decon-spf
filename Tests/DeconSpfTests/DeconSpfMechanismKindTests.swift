@@ -20,11 +20,11 @@ final class SPFMechanimsKindTests: XCTestCase {
         XCTAssertEqual(MK.get(), "mx");
     }
     func testMechanimsKindIp4() {
-        let MK = MechanismKind.ip4;
+        let MK = MechanismKind.Ip4;
         XCTAssertEqual(MK.get(), "ip4:");
     }
     func testMechanimsKindIp6() {
-        let MK = MechanismKind.ip6;
+        let MK = MechanismKind.Ip6;
         XCTAssertEqual(MK.get(), "ip6:");
     }
     func testMechanimsKindAll() {

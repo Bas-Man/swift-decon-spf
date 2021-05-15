@@ -1,45 +1,25 @@
 enum Qualifier: String {
-    case Pass
-    case Fail
-    case SoftFail
-    case Neutral
-    case None
+    case Pass = "+";
+    case Fail = "-";
+    case SoftFail = "~";
+    case Neutral = "?";
+    case None = "";
     
     func get() -> String {
-        switch self {
-        case .Pass:
-            return "+"
-        case .Fail:
-            return "-"
-        case .SoftFail:
-            return "~"
-        case .Neutral:
-            return "?"
-        case .None:
-            return ""
-        }
+        return self.rawValue;
     }
 }
-enum MechanismKind {
-    case Redirect, Include, A, MX, ip4, ip6, All;
+enum MechanismKind: String {
+    case Redirect = "redirect=";
+    case Include = "include:"
+    case A = "a";
+    case MX = "mx";
+    case Ip4 = "ip4:";
+    case Ip6 = "ip6:"
+    case All = "all";
     
     func get() -> String {
-        switch self {
-        case .Redirect:
-            return "redirect="
-        case .Include:
-            return "include:"
-        case .A:
-            return "a"
-        case .MX:
-            return "mx"
-        case .ip4:
-            return "ip4:"
-        case .ip6:
-            return "ip6:"
-        case .All:
-            return "all"
-        }
+        return self.rawValue;
     }
 }
 
@@ -58,7 +38,7 @@ struct Mechanism {
     }
     func asMechanism() -> String {
         var mechanismString = String();
-        // TODO: Qualifier
+        mechanismString += self.qualifier.get();
         // Access the string for this mechanism's kind.
         mechanismString += self.kind.get();
         // Access the string for the mechanim
