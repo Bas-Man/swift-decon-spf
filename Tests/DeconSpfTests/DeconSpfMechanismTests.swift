@@ -43,11 +43,19 @@ final class SPFMechanismTests: XCTestCase {
         let Mech = Mechanism(k: MechanismKind.A, q: Qualifier.None, m: "");
         XCTAssertEqual(Mech.asMechanism(), "a");
     }
+    func testAsMechanismAColon() {
+        let Mech = Mechanism(k: MechanismKind.A, q: Qualifier.SoftFail, m: ":mailers.example.com");
+        XCTAssertEqual(Mech.asMechanism(), "~a:mailers.example.com");
+    }
     func testAsMechanismMx() {
         let Mech = Mechanism(k: MechanismKind.MX, q: Qualifier.None, m: "");
         XCTAssertEqual(Mech.asMechanism(), "mx");
     }
-    
+    func testAsMechanismMxColon() {
+        let Mech = Mechanism(k: MechanismKind.MX, q: Qualifier.Neutral, m: ":example.com");
+        XCTAssertEqual(Mech.asMechanism(), "?mx:example.com");
+    }
+
     static var allTests = [
         ("testMechanismRedirect", testMechanismRedirect),
         ("testMechanismInclude", testMechanismInclude),
@@ -57,7 +65,9 @@ final class SPFMechanismTests: XCTestCase {
         ("testAsMechanismRedirect", testAsMechanismRedirect),
         ("testAsMechanismInclude", testAsMechanismInclude),
         ("testAsMechanismA", testAsMechanismA),
+        ("testAsMechanismAColon", testAsMechanismAColon),
         ("testAsMechanismMx", testAsMechanismMx),
+        ("testAsMechanismMxColon", testAsMechanismMxColon),
     ]
 }
 
