@@ -26,23 +26,23 @@ enum MechanismKind: String {
 struct Mechanism {
     var kind: MechanismKind;
     var qualifier: Qualifier;
-    var mechanism: String;
+    var mechanism: String?;
     
-    init(k: MechanismKind, q: Qualifier, m: String) {
+    init(k: MechanismKind, q: Qualifier, m: String? = nil) {
         kind = k;
         qualifier = q;
         mechanism = m;
     }
     func mechanismString() -> String {
-        self.mechanism;
+        self.mechanism ?? "";
     }
     func asMechanism() -> String {
         var mechanismString = String();
         mechanismString += self.qualifier.get();
         // Access the string for this mechanism's kind.
         mechanismString += self.kind.get();
-        // Access the string for the mechanim
-        mechanismString += self.mechanism;
+        // Access the string for the mechanism
+        mechanismString += self.mechanism ?? "";
         return mechanismString;
     }
     func whatKind() -> MechanismKind {
