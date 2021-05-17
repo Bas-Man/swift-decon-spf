@@ -1,3 +1,4 @@
+/// Qualifiers that can be applied to a Mechanism
 enum Qualifier: String {
     case Pass = "+";
     case Fail = "-";
@@ -9,6 +10,7 @@ enum Qualifier: String {
         return self.rawValue;
     }
 }
+/// List of the kinds of Mechanisms that are supported.
 enum MechanismKind: String {
     case Redirect = "redirect=";
     case Include = "include:"
@@ -22,12 +24,26 @@ enum MechanismKind: String {
         return self.rawValue;
     }
 }
-
+/// Structure definition of a Mechanism.
 struct Mechanism {
+    /// MechanismKind
     var kind: MechanismKind;
+    /// Qualifier of the current Mechanism
     var qualifier: Qualifier;
+    /// The value of the current Mechanism
     var mechanism: String?;
     
+    /**
+            Initialises a new Mechanism
+            - Parameters:
+                - k: What kind of Mechanism this represents
+                - q: What Qualifier has been applied.
+                - m: What is the value for this Mechanism
+  
+            - Returns:
+                A Mechanism instance.
+     
+     */
     init(k: MechanismKind, q: Qualifier, m: String? = nil) {
         kind = k;
         qualifier = q;
@@ -36,6 +52,22 @@ struct Mechanism {
     func mechanismString() -> String {
         self.mechanism ?? "";
     }
+    /**
+     Returns the String representation of the Mechanism.
+        This will recreate the original string for the mechanism
+        # Example:
+        ```
+        let Mech = Mechanism(k: Mechanism.Ip4, q: Qualifier.Pass, m: "192.168.11.0/24");
+        Mech.asMechanism();
+        ```
+        This produces the output
+        ```
+        ip4:192.168.11.0/24
+        ```
+     - Returns:
+     String
+     
+     */
     func asMechanism() -> String {
         var mechanismString = String();
         mechanismString += self.qualifier.get();
