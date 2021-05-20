@@ -10,8 +10,13 @@ enum Qualifier: String {
         return self.rawValue;
     }
 }
-/// List of the kinds of Mechanisms that are supported.
-enum MechanismKind: String {
+/**
+List of the kinds of Mechanisms that are supported.
+ 
+The *raw values* of each case are also used when asMechanism() is called.
+ 
+*/
+ enum MechanismKind: String {
     case Redirect = "redirect=";
     case Include = "include:"
     case A = "a";
