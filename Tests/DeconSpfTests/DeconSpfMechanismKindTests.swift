@@ -1,45 +1,45 @@
 import XCTest
 @testable import DeconSpf;
 
-final class SPFMechanimsKindTests: XCTestCase {
+final class SPFMechanismKindTests: XCTestCase {
 
-    func testMechanimsKindRedirect() {
+    func testMechanismKindRedirect() {
         let MK = MechanismKind.Redirect;
         XCTAssertEqual(MK.get(), "redirect=");
     }
-    func testMechanimsKindInclude() {
+    func testMechanismKindInclude() {
         let MK = MechanismKind.Include;
         XCTAssertEqual(MK.get(), "include:");
     }
-    func testMechanimsKindA() {
+    func testMechanismKindA() {
         let MK = MechanismKind.A;
         XCTAssertEqual(MK.get(), "a");
     }
-    func testMechanimsKindMX() {
+    func testMechanismKindMX() {
         let MK = MechanismKind.MX;
         XCTAssertEqual(MK.get(), "mx");
     }
-    func testMechanimsKindIp4() {
+    func testMechanismKindIp4() {
         let MK = MechanismKind.Ip4;
         XCTAssertEqual(MK.get(), "ip4:");
     }
-    func testMechanimsKindIp6() {
+    func testMechanismKindIp6() {
         let MK = MechanismKind.Ip6;
         XCTAssertEqual(MK.get(), "ip6:");
     }
-    func testMechanimsKindAll() {
+    func testMechanismKindAll() {
         let MK = MechanismKind.All;
         XCTAssertEqual(MK.get(), "all");
     }
 
     static var allTests = [
-        ("testMechanismKindRedirect", testMechanimsKindRedirect),
-        ("testMechanismKindInclude", testMechanimsKindInclude),
-        ("testMechanismKindA", testMechanimsKindA),
-        ("testMechanismKindMX", testMechanimsKindMX),
-        ("testMechanismKindIp4", testMechanimsKindIp4),
-        ("testMechanismKindIp6", testMechanimsKindIp6),
-        ("testMechanismKindAll", testMechanimsKindAll),
+        ("testMechanismKindRedirect", testMechanismKindRedirect),
+        ("testMechanismKindInclude", testMechanismKindInclude),
+        ("testMechanismKindA", testMechanismKindA),
+        ("testMechanismKindMX", testMechanismKindMX),
+        ("testMechanismKindIp4", testMechanismKindIp4),
+        ("testMechanismKindIp6", testMechanismKindIp6),
+        ("testMechanismKindAll", testMechanismKindAll),
 
     ]
 }
