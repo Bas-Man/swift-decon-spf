@@ -111,9 +111,13 @@ final class SPFTests: XCTestCase {
         ("testSPF1ParseA", testSPF1ParseA),
         ("testSPFParseAwithQualifier", testSPFParseAwithQualifier),
         ("testSPFParseAwithQualifierValue", testSPFParseAwithQualifierValue),
+        ("testSPFParseMX", testSPFParseMX),
+        ("testSPFParseMXValue", testSPFParseMXValue),
+        ("testSPFParseMXwithQualifier", testSPFParseMXwithQualifier),
         ("testSPF1ParseRedirect", testSPF1ParseRedirect),
         ("testSPF1ParseInclude", testSPF1ParseInclude),
         ("testSPF1ParseIp4", testSPF1ParseIp4),
+        ("testSPF1ParseIp4x2", testSPF1ParseIp4x2),
         ("testSPF1ParseIp6", testSPF1ParseIp6),
     ]
 }
