@@ -6,6 +6,10 @@ enum Qualifier: String {
     case Neutral = "?";
     case None = "";
     
+    /**
+     Acess the rawValue of Qualifier
+     - returns: A string value for the Qualifier
+     */
     func get() -> String {
         return self.rawValue;
     }

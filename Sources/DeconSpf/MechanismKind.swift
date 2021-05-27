@@ -13,6 +13,10 @@ The *raw values* of each case are also used when asMechanism() is called.
     case Ip6 = "ip6:"
     case All = "all";
     
+    /**
+     Acess the rawValue of MechanismKind
+     - returns: A string value for the MechanismKind
+     */
     func get() -> String {
         return self.rawValue;
     }

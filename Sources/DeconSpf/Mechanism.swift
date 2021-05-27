@@ -38,8 +38,7 @@ struct Mechanism {
         ```
         ip4:192.168.11.0/24
         ```
-     - Returns:
-     String
+     - Returns: String
      
      */
     func asMechanism() -> String {
@@ -51,6 +50,8 @@ struct Mechanism {
         mechanismString += self.mechanism ?? "";
         return mechanismString;
     }
+    /// Access attribute kind
+    /// - Returns: The value of kind.
     func whatKind() -> MechanismKind {
         return self.kind;
     }

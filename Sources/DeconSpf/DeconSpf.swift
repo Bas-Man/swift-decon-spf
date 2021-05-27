@@ -1,5 +1,7 @@
 import Foundation
-
+/**
+ This is a struct which represents an SPF record as found in and DNS Record.
+ */
 struct SPF {
     private(set) var source: String
     var version: String = ""
@@ -11,7 +13,10 @@ struct SPF {
     var ip4: [Mechanism]?
     var ip6: [Mechanism]?
     var all: Mechanism?
-    
+    /**
+     Initialises the SPF struct
+     - parameter source: The string passed from an exist TXT DNS record.
+     */
     init(source: String) {
         self.source = source
     }
@@ -181,8 +186,9 @@ extension String {
     /**
      Creates a Mechanism if the regular expression finds a match.
      
-     - parameter regex: The regular expression string to be used.
-     - parameter kind: The MechanismKind to be created.
+     - parameters:
+        - regex: The regular expression string to be used.
+        - kind: The MechanismKind to be created.
 
      - returns: A Mechanism of the kind specified if there is a match, else returns nil
      
