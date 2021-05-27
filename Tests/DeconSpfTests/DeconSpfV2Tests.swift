@@ -10,6 +10,7 @@ final class SPFV2Tests: XCTestCase {
         spf.parse()
         XCTAssertEqual(spf.version, "spf2.0/pra")
         XCTAssertEqual(spf.isV2(), true)
+        XCTAssertEqual(spf.isValid(), true)
         // Not V1 is V2
         XCTAssertNotEqual(spf.isV1(), true)
     }

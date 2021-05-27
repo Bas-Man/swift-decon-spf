@@ -15,27 +15,64 @@ struct SPF {
     init(source: String) {
         self.source = source
     }
+    /**
+        - returns: The original string used to create the SPF struct.
+     */
     func getSource() -> String {
         self.source
     }
+    /**
+     - returns: True if the spf record is a redirect to another spf record.
+     */
     func isRedirect() -> Bool {
         self.is_redirect
     }
+    /**
+     - returns: True if the spf records starts with "v="
+     */
     func isV1() -> Bool {
         self.version.starts(with: "v=")
      }
+    /**
+     - returns: True if the spf recard starts with "spf2"
+     */
     func isV2() -> Bool {
         self.version.starts(with: "spf2")
     }
+    /**
+     Checks that the spf record is valid
+     
+     This function will check that the array of includes does not exceed 10. It also check that the total length of the spf string does not exceed 255 characters
+     
+     - returns: True if the number include items are equal or less than 10 and the overall string length is 255 or less.
+     */
+    func isValid() -> Bool {
+        if self.include?.count ?? 0 > 10 {
+            return false
+        }
+        if self.source.count > 255 {
+            return false
+        }
+        return true
+    }
+    /**
+     This function processes self.source and populates the spf struct.
+     
+     As part of this process it creates all required Mechanism structs that are present in the spf string.
+     */
     mutating func parse() {
+        // Regular Expression Strings for matching A and MX Mechanisms
         let aRegex = #"^([+?~-])?a([:/]{0,1}.*)?"#
         let MxRegex = #"^([+?~-])?mx([:/]{0,1}.*)?"#
+        
         let splitString = self.source.split(separator: " ")
+        // Arrays for holding Mechanisms that are found.
         var includeData: [Mechanism] = []
         var aData: [Mechanism] = []
         var mxData: [Mechanism] = []
         var ip4Data: [Mechanism] = []
         var ip6Data: [Mechanism] = []
+       
         for subString in splitString {
             //Done
             if (subString.starts(with: "v=") || subString.starts(with: "spf2")) {
@@ -93,6 +130,8 @@ struct SPF {
                     mxData.append(mxMechanism)
                 }
         }
+        // If any Mechanisms have been found. Assign their array to the relevent
+        // variable in struct spf.
         if !includeData.isEmpty {
             self.include = includeData
         }
@@ -139,8 +178,15 @@ private func processIp<S: StringProtocol>(subString s: S, kind: MechanismKind) -
 }
 
 extension String {
-    // Creates a Mechanism if the the regular expression finds a match.
-    // If there is no match, nil is returned
+    /**
+     Creates a Mechanism if the regular expression finds a match.
+     
+     - parameter regex: The regular expression string to be used.
+     - parameter kind: The MechanismKind to be created.
+
+     - returns: A Mechanism of the kind specified if there is a match, else returns nil
+     
+     */
     func matchMechanism(regex: String, kind: MechanismKind) -> Mechanism? {
         
         let capturePattern = regex
@@ -178,10 +224,11 @@ extension String {
         }
         // If count is less than 2 there was no Qualifier
         var q = Qualifier.None
+        // Qualifer will always be in the first capture if present.
         if elements.count == 2 {
             q = identifyQualifier(prefix: elements.first!)
         }
-        
+        // There will always be a capture which contain the IP Address string.
         return Mechanism(k: kind, q: q, m: elements.last!)
     }
 }

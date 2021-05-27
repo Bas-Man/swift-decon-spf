@@ -10,6 +10,7 @@ final class SPFTests: XCTestCase {
         spf.parse()
         XCTAssertEqual(spf.version, "v=spf1")
         XCTAssertEqual(spf.isV1(), true)
+        XCTAssertEqual(spf.isValid(), true)
         // Not V2 is V1
         XCTAssertNotEqual(spf.isV2(), true)
         XCTAssertEqual(spf.all?.asMechanism(), "~all")
@@ -17,6 +18,26 @@ final class SPFTests: XCTestCase {
         XCTAssert(spf.include == nil)
         XCTAssert(spf.ip4 == nil)
         XCTAssert(spf.ip6 == nil)
+    }
+    func testSPF1IncludesOk () {
+        var spf = SPF(source: "v=spf1 include:ab include:cd include:ef include:gh include:ij include:kl include:mn include:op include:qr include:st -all")
+        spf.parse()
+        XCTAssertEqual(spf.include?.count, 10)
+        XCTAssertEqual(spf.isValid(), true)
+
+    }
+    func testSPF1TooManyIncludes() {
+        var spf = SPF(source: "v=spf1 include:ab include:cd include:ef include:gh include:ij include:kl include:mn include:op include:qr include:st include:uv -all")
+        spf.parse()
+        XCTAssertEqual(spf.include?.count, 11)
+
+        XCTAssertEqual(spf.isValid(), false)
+    }
+    func testSPF1TooLong() { // Exceeds Max length of 255 characters
+        var spf = SPF(source: "v=spf1 include:_spf.ab.example.com include:spf_.cd.example.com include:_spf.ef.example.com include:gh.example.com include:ij.example.com include:kl.example.com include:mn.example.com include:op.example.com include:qr.example.com include:st.example.com -all")
+        spf.parse()
+        XCTAssertEqual(spf.source.count, 256) // Exceeds max length of 255 characters
+        XCTAssertEqual(spf.isValid(), false)
     }
     func testSPF1ParseA() {
         var spf = SPF(source: "v=spf1 a mx ~all")
@@ -108,6 +129,9 @@ final class SPFTests: XCTestCase {
 
     static var allTests = [
         ("testSPFInitV1", testSPFInitV1),
+        ("testSPF1IncludesOk", testSPF1IncludesOk),
+        ("testSPF1TooManyIncludes", testSPF1TooManyIncludes),
+        ("testSPF1TooLong", testSPF1TooLong),
         ("testSPF1ParseA", testSPF1ParseA),
         ("testSPFParseAwithQualifier", testSPFParseAwithQualifier),
         ("testSPFParseAwithQualifierValue", testSPFParseAwithQualifierValue),
