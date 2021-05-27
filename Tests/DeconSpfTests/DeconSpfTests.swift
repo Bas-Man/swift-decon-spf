@@ -127,6 +127,42 @@ final class SPFTests: XCTestCase {
 
     }
 
+    func testSPF1AsSpf() {
+        var spf = SPF(source: "v=spf1 a mx +all")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+    func testSPF1AsSpfMX() {
+        var spf = SPF(source: "v=spf1 mx:test.com -mx:example.com ?all")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+    func testSPF1AsSpfInclude() {
+        var spf = SPF(source: "v=spf1 include:_spf.test.com include:_spf2.test.com ?all")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+    func testSPF1AsSpfIp4() {
+        var spf = SPF(source: "v=spf1 ip4:203.32.160.0/24 ip4:203.32.166.0/24 ?all")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+    func testSPF1AsSpfIp6() {
+        var spf = SPF(source: "v=spf1 ip6:2001:4860:4000::/36 ip6:2404:6800:4000::/36 ?all")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+    func testSPF1AsSpfIp4Ip6() {
+        var spf = SPF(source: "v=spf1 ip4:203.32.160.0/24 ip4:203.32.166.0/24 ip6:2001:4860:4000::/36 ip6:2404:6800:4000::/36 ?all")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+
+    func testSPF1asSpfRedirect() {
+        var spf = SPF(source: "v=spf1 redirect=_spf.example.com")
+        spf.parse()
+        XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
     static var allTests = [
         ("testSPFInitV1", testSPFInitV1),
         ("testSPF1IncludesOk", testSPF1IncludesOk),

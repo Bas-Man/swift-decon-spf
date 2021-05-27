@@ -153,6 +153,60 @@ struct SPF {
             self.ip6 = ip6Data
         }
     }
+    /**
+     This function will attempt to recreate the original spf record.
+     
+     - note: This function processes the struct in the following order:
+        - redirect
+        - a
+        - mx
+        - include
+        - ip4
+        - ip6
+        - all
+        
+        If your original order differs from this. The items should match, but the order will differ.
+     */
+    func asSpf() -> String {
+        var spf = String()
+        if self.isValid() {
+            spf += self.version
+            if self.isRedirect() {
+                spf += " " + (self.redirect?.asMechanism())!
+            }
+            else {
+                if self.a != nil {
+                    for mechanism in self.a! {
+                        spf += " " + mechanism.asMechanism()
+                    }
+                }
+                if self.mx != nil {
+                    for mechanism in self.mx! {
+                        spf += " " + mechanism.asMechanism()
+                    }
+                }
+                if self.include != nil {
+                    for mechanism in self.include! {
+                        spf += " " + mechanism.asMechanism()
+                    }
+                }
+                if self.ip4 != nil {
+                    for mechanism in self.ip4! {
+                        spf += " " + mechanism.asMechanism()
+                    }
+                }
+                if self.ip6 != nil {
+                    for mechanism in self.ip6! {
+                        spf += " " + mechanism.asMechanism()
+                    }
+                }
+            }
+            if self.all != nil {
+                spf += " " + self.all!.asMechanism()
+            }
+        }
+        return spf
+    }
 }
 
 private func identifyQualifier<S: StringProtocol>(prefix s: S)  -> Qualifier {
