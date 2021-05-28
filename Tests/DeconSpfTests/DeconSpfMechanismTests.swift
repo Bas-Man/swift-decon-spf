@@ -21,10 +21,12 @@ final class SPFMechanismTests: XCTestCase {
     func testAsMechanismIp4() {
         let Mech = Mechanism(k: MechanismKind.Ip4, q: Qualifier.None, m: "192.168.1.0/24");
         XCTAssertEqual(Mech.asMechanism(), "ip4:192.168.1.0/24");
+        // Qualifier.Pass and Qualifier.None should both return true for isPass()
+        XCTAssertEqual(Mech.isPass(), true)
     }
     func testAsMechanismIp4Pass() {
         let Mech = Mechanism(k: MechanismKind.Ip4, q: Qualifier.Pass, m: "192.168.1.0/24");
-        XCTAssertEqual(Mech.asMechanism(), "+ip4:192.168.1.0/24");
+        XCTAssertEqual(Mech.asMechanism(), "ip4:192.168.1.0/24");
     }
 
     func testAsMechanismIp6() {
@@ -57,7 +59,7 @@ final class SPFMechanismTests: XCTestCase {
     }
     func testAsMechanismAllPass() {
         let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Pass);
-        XCTAssertEqual(Mech.asMechanism(), "+all");
+        XCTAssertEqual(Mech.asMechanism(), "all");
     }
     func testAsMechanismAllFail() {
         let Mech = Mechanism(k: MechanismKind.All, q: Qualifier.Fail);

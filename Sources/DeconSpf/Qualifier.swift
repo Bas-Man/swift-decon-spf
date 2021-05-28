@@ -1,16 +1,21 @@
 /// Qualifiers that can be applied to a Mechanism
-enum Qualifier: String {
-    case Pass = "+";
+@frozen
+public enum Qualifier: String {
+    case Pass = "";
     case Fail = "-";
     case SoftFail = "~";
     case Neutral = "?";
-    case None = "";
+    case None;
     
     /**
      Acess the rawValue of Qualifier
      - returns: A string value for the Qualifier
      */
-    func get() -> String {
+    public func get() -> String {
+        // None and Pass are equal
+        if self == Qualifier.None {
+            return Qualifier.Pass.rawValue
+        }
         return self.rawValue;
     }
 }

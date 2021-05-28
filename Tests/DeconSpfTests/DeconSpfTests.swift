@@ -55,7 +55,7 @@ final class SPFTests: XCTestCase {
     func testSPFParseAwithQualifier() {
         var spf = SPF(source: "v=spf1 +a all")
         spf.parse()
-        XCTAssertEqual(spf.a?[0].asMechanism(), "+a")
+        XCTAssertEqual(spf.a?[0].asMechanism(), "a")
         XCTAssertEqual(spf.all?.asMechanism(), "all")
 
     }
@@ -64,7 +64,7 @@ final class SPFTests: XCTestCase {
         var spf = SPF(source: "v=spf1 +a:example.com all")
         spf.parse()
         XCTAssertEqual(spf.a?[0].mechanismString(), ":example.com")
-        XCTAssertEqual(spf.a?[0].asMechanism(), "+a:example.com")
+        XCTAssertEqual(spf.a?[0].asMechanism(), "a:example.com")
         XCTAssertEqual(spf.all?.asMechanism(), "all")
     }
 
@@ -83,7 +83,7 @@ final class SPFTests: XCTestCase {
     func testSPFParseMXwithQualifier() {
         var spf = SPF(source: "v=spf1 a +mx all")
         spf.parse()
-        XCTAssertEqual(spf.mx?[0].asMechanism(), "+mx")
+        XCTAssertEqual(spf.mx?[0].asMechanism(), "mx")
        XCTAssertEqual(spf.all?.asMechanism(), "all")
 
     }
@@ -107,28 +107,28 @@ final class SPFTests: XCTestCase {
     func testSPF1ParseIp4() {
         var spf = SPF(source: "v=spf1 +ip4:10.10.1.0/24 mx ~all")
          spf.parse()
-        XCTAssertEqual(spf.ip4?[0].asMechanism(), "+ip4:10.10.1.0/24")
+        XCTAssertEqual(spf.ip4?[0].asMechanism(), "ip4:10.10.1.0/24")
         XCTAssertEqual(spf.all?.asMechanism(), "~all")
 
     }
     func testSPF1ParseIp4x2() {
         var spf = SPF(source: "v=spf1 +ip4:10.10.1.0/24 +ip4:192.168.11.0/16 mx ~all")
          spf.parse()
-        XCTAssertEqual(spf.ip4?[0].asMechanism(), "+ip4:10.10.1.0/24")
-        XCTAssertEqual(spf.ip4?[1].asMechanism(), "+ip4:192.168.11.0/16")
+        XCTAssertEqual(spf.ip4?[0].asMechanism(), "ip4:10.10.1.0/24")
+        XCTAssertEqual(spf.ip4?[1].asMechanism(), "ip4:192.168.11.0/16")
         XCTAssertEqual(spf.all?.asMechanism(), "~all")
 
     }
     func testSPF1ParseIp6() {
         var spf = SPF(source: "v=spf1 +ip6:1::1:1/16 mx ~all")
          spf.parse()
-        XCTAssertEqual(spf.ip6?[0].asMechanism(), "+ip6:1::1:1/16")
+        XCTAssertEqual(spf.ip6?[0].asMechanism(), "ip6:1::1:1/16")
         XCTAssertEqual(spf.all?.asMechanism(), "~all")
 
     }
 
     func testSPF1AsSpf() {
-        var spf = SPF(source: "v=spf1 a mx +all")
+        var spf = SPF(source: "v=spf1 a mx all")
         spf.parse()
         XCTAssertEqual(spf.asSpf(), spf.getSource())
     }
@@ -162,6 +162,11 @@ final class SPFTests: XCTestCase {
         var spf = SPF(source: "v=spf1 redirect=_spf.example.com")
         spf.parse()
         XCTAssertEqual(spf.asSpf(), spf.getSource())
+    }
+    func testSPFBlank() {
+        let spf = SPF()
+        XCTAssertEqual(spf.getSource(), "")
+        XCTAssertEqual(spf.isValid(), false)
     }
     static var allTests = [
         ("testSPFInitV1", testSPFInitV1),

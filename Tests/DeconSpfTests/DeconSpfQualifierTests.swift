@@ -5,7 +5,7 @@ final class SPFQualifierTests: XCTestCase {
 
     func testQualifierPass() {
         let Q = Qualifier.Pass;
-        XCTAssertEqual(Q.get(), "+");
+        XCTAssertEqual(Q.get(), "");
     }
     func testQualifierFail() {
         let Q = Qualifier.Fail;
